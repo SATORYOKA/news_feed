@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/data/category_info.dart';
 import 'package:news_feed/data/search_type.dart';
 import 'package:news_feed/viewmodels/news_list_viewmodels.dart';
+import 'package:news_feed/views/components/article_tile.dart';
 import 'package:news_feed/views/components/search_bar.dart';
 import 'package:news_feed/views/components/category_tips.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,13 @@ import 'package:provider/provider.dart';
 class NewsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
+
+    if (!viewModel.isLoading && viewModel.articles.isEmpty) {
+      Future(() => viewModel.getNews(
+          searchType: SearchType.CATEGORY, category: categories[0]));
+    }
+
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -30,7 +38,20 @@ class NewsListPage extends StatelessWidget {
                     getCategoryNews(context, category),
               ),
               //記事表示
-              Expanded(child: Center(child: CircularProgressIndicator())),
+              Expanded(child:
+                  Consumer<NewsListViewModel>(builder: (context, model, child) {
+                return model.isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        itemCount: model.articles.length,
+                        itemBuilder: (context, int position) => ArticleTile(
+                            article: model.articles[position],
+                            onArticleClicked: (article) =>
+                                _openArticleWebPage(article, context)),
+                      );
+              })),
             ],
           ),
         ),
@@ -69,5 +90,9 @@ class NewsListPage extends StatelessWidget {
     );
     // print(
     //     'NewsListPage.CategoryNews / category: ${category.nameJp} / ${category.nameEn}');
+  }
+
+  _openArticleWebPage(article, BuildContext context) {
+    print('_openArticleWebPage: ${article.url}');
   }
 }
