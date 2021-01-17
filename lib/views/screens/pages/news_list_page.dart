@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/data/category_info.dart';
 import 'package:news_feed/data/search_type.dart';
 import 'package:news_feed/viewmodels/news_list_viewmodels.dart';
+import 'package:news_feed/views/components/article_tile.dart';
 import 'package:news_feed/views/components/search_bar.dart';
 import 'package:news_feed/views/components/category_tips.dart';
 import 'package:provider/provider.dart';
@@ -45,10 +46,10 @@ class NewsListPage extends StatelessWidget {
                       )
                     : ListView.builder(
                         itemCount: model.articles.length,
-                        itemBuilder: (context, int position) => ListTile(
-                          title: Text(model.articles[position].title),
-                          subtitle: Text(model.articles[position].description),
-                        ),
+                        itemBuilder: (context, int position) => ArticleTile(
+                            article: model.articles[position],
+                            onArticleClicked: (article) =>
+                                _openArticleWebPage(article, context)),
                       );
               })),
             ],
@@ -89,5 +90,9 @@ class NewsListPage extends StatelessWidget {
     );
     // print(
     //     'NewsListPage.CategoryNews / category: ${category.nameJp} / ${category.nameEn}');
+  }
+
+  _openArticleWebPage(article, BuildContext context) {
+    print('_openArticleWebPage: ${article.url}');
   }
 }
