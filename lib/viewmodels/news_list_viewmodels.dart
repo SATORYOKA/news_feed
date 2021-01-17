@@ -40,7 +40,7 @@ class NewsListViewModel extends ChangeNotifier {
     );
 
     print(
-        'searchtype: $searchType/ keyword: $keyword / category: $category / articles: ${_articles[0].title}');
+        'searchtype: $searchType / keyword: $keyword / category: $category / articles: ${_articles[0].title}');
 
     _isLoading = false;
     notifyListeners();
