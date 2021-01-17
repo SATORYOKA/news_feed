@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_feed/views/components/article_tile_desc.dart';
 import 'package:news_feed/views/components/image_form_url.dart';
 
 class ArticleTile extends StatelessWidget {
@@ -26,6 +27,7 @@ class ArticleTile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Center(
+                  //使用不可
                   // child: ImageFromUrl(
                   //   imageUrl: article.urlToImage,
                   // ),
@@ -34,12 +36,11 @@ class ArticleTile extends StatelessWidget {
               ),
               Expanded(
                   flex: 3,
-                  child: Column(
-                    children: [
-                      Text(article.title),
-                      Text(article.publishedDate),
-                      Text(article.description),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ArticleTileDesc(
+                      article: article,
+                    ),
                   )),
             ],
           ),

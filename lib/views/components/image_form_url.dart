@@ -8,15 +8,14 @@ class ImageFromUrl extends StatelessWidget {
   Widget build(BuildContext context) {
     final isInvalidUrl = imageUrl.startsWith("http");
     if (imageUrl == null || imageUrl == '' || !isInvalidUrl) {
-      print('error ===========================================$isInvalidUrl');
       return const Icon(Icons.broken_image);
     } else {
-      print('success ===========================================$imageUrl');
       return CachedNetworkImage(
         imageUrl: imageUrl,
         placeholder: (context, url) => CircularProgressIndicator(),
         errorWidget: (context, url, error) => Icon(Icons.error),
       );
+      //return Image.network(image: )
     }
   }
 }
