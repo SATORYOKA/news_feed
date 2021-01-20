@@ -5,6 +5,7 @@ import 'package:news_feed/viewmodels/news_list_viewmodels.dart';
 import 'package:news_feed/views/components/article_tile.dart';
 import 'package:news_feed/views/components/search_bar.dart';
 import 'package:news_feed/views/components/category_tips.dart';
+import 'package:news_feed/views/screens/pages/news_web_screen_page.dart';
 import 'package:provider/provider.dart';
 
 class NewsListPage extends StatelessWidget {
@@ -94,5 +95,8 @@ class NewsListPage extends StatelessWidget {
 
   _openArticleWebPage(article, BuildContext context) {
     print('_openArticleWebPage: ${article.url}');
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => NewsWebPageScreen(article: article),
+    ));
   }
 }
